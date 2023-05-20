@@ -195,7 +195,6 @@ require([
           return layer.visible && orthoLayerTitles.includes(layer.title);
         });
       }
-
       function manageBasemapVisibility(baseLayers) {
         const orthoLayerTitles = [
           "Ortho 2012",
@@ -204,18 +203,28 @@ require([
           `${basemapTitle}`,
         ];
 
-        let visibleLayerFound = false;
+        // Filter out the layers that we're interested in
+        let basemapLayers = baseLayers.filter((layer) =>
+          orthoLayerTitles.includes(layer.title)
+        );
 
-        baseLayers.forEach((layer) => {
-          if (
-            orthoLayerTitles.includes(layer.title) &&
-            layer.visible &&
-            !visibleLayerFound
-          ) {
-            visibleLayerFound = true;
-          } else {
-            layer.visible = false;
-          }
+        // Find the newly visible layer
+        let newlyVisibleLayer = basemapLayers.find(
+          (layer) => layer.visible && !layer.wasVisible
+        );
+
+        // If a newly visible layer is found, turn off all other layers
+        if (newlyVisibleLayer) {
+          basemapLayers.forEach((layer) => {
+            if (layer !== newlyVisibleLayer) {
+              layer.visible = false;
+            }
+          });
+        }
+
+        // Update wasVisible property
+        basemapLayers.forEach((layer) => {
+          layer.wasVisible = layer.visible;
         });
       }
 

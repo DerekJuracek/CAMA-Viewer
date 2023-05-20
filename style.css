@@ -269,10 +269,14 @@ h5#filterList {
   font-weight: 650;
   font-size: 18px;
   text-align: center;
+
   /* padding-top: 10px; */
 
   flex-direction: column;
   justify-content: center;
+}
+h5#layerList {
+  padding-top: 5px;
 }
 
 h5#filterList {
