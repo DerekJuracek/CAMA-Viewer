@@ -6,6 +6,7 @@
   "cssViewBackground": "rgb(66, 53, 125)",
   "cssLayerFilterColor": "rgb(203, 197, 248",
   "cssLayerFilterTextColor": "rgb(66, 53, 125)",
+  "basemapTitle": "CT North Haven Basemap",
   "layers": [
     {
       "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/ArcGIS/rest/services/CT_North_Haven_CAMA_Viewer/FeatureServer/8",
@@ -56,7 +57,7 @@
       "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/ArcGIS/rest/services/CT_North_Haven_CAMA_Viewer/FeatureServer/0",
       "title": "Primary Use",
       "fieldName": "Parcel_Primary_Use",
-      "isVisible": true,
+      "isVisible": false,
       "orderByField": "OBJECTID",
       "combobox1": "combo1",
       "combobox2": "combo2"

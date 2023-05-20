@@ -39,7 +39,7 @@
         <button id="toggle-panel-btn" class="toggle-panel-btn rotated">≫</button>
           <calcite-shell-panel slot="panel-start" content-behind detached id="panel-content" >
            <calcite-action-bar class="calcite-m" slot="action-bar" expand-disabled>
-             <calcite-panel>
+             <calcite-panel id=layerPanel>
                <div class="layerDiv1" id="layerDiv" >
                  <h5 slot="header-content" id="layerList">Layer List</h5>
                   <!-- Dynamically populated from JavaScript -->
@@ -47,12 +47,13 @@
             <div id="layers-container"></div>
             </calcite-panel>
              <calcite-panel>
-               <div class="layerDiv1" id="layerDiv" >
-                 <h5 slot="header-content" id="layerList" >Filters</h5>
+               <div class="layerDiv1" id="filterDiv" >
+                 <h5 slot="header-content" id="filterList">Filters</h5>
+                 <!-- Dynamically populated from JavaScript -->
                 </div>
           <calcite-accordion icon-position="start" icon-type="caret" scale="m">
             <!-- Filter for Primary Use -->
-            <calcite-accordion-item description="Primary Use" icon-start="filter" scale = "s">
+            <calcite-accordion-item description="Primary Use" icon-start="filter" scale="m">
               <calcite-label>
                 <div class="filter-label-container">
                   Parcel Primary Use is
@@ -142,9 +143,9 @@
            </calcite-label>
             </calcite-accordion-item>
             <calcite-panel>
-              <div id="resetFilters">
+              <!-- <div id="resetFilters">
            <calcite-button id= "refresh" icon-start="refresh" alignment="end" appearance="transparent" kind="neutral" scale="m" round></calcite-button>
-          </div>
+          </div> -->
             </calcite-panel>
           </calcite-accordion>
         </calcite-panel>
