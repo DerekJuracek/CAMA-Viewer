@@ -65,6 +65,36 @@ require([
       const image = config.image;
       const Title = config.title;
 
+      const basemapTitle = config.basemapTitle;
+
+      // logic to create div, calcite icon, and append to filterList div
+
+      // const filterDiv = document.createElement("div");
+      const filterButton = document.createElement("calcite-icon");
+      filterButton.setAttribute("icon", "reset");
+      filterButton.setAttribute("id", "resetFilters");
+
+      // filterButton.setAttribute("theme", "dark");
+      filterButton.style.cursor = "pointer";
+      filterButton.style.marginLeft = "200px";
+      filterButton.style.marginTop = "2px";
+      // filterDiv.appendChild(filterButton);
+
+      const filterList = document.getElementById("filterDiv");
+      filterList.appendChild(filterButton);
+
+      // Copy the legend toggle to learn and do it yourself for the reset button
+
+      // const legendToggle = document.createElement("calcite-icon");
+      // legendToggle.setAttribute("icon", "legend");
+      // legendToggle.setAttribute("scale", "m");
+      // legendToggle.setAttribute("theme", "dark");
+      // legendToggle.style.cursor = "pointer";
+      // legendToggle.style.marginLeft = "170px";
+
+      // const layerDiv1 = document.getElementById("layerDiv");
+      // layerDiv1.appendChild(legendToggle);
+
       const view = new MapView({
         container: "viewDiv",
         map: webmap,
@@ -119,8 +149,6 @@ require([
         }
       });
 
-      // Sets parcel boundaries rendered, depending on if ortho basemaps are visible or not
-
       view.when().then(() => {
         let originalRenderer;
 
@@ -136,6 +164,7 @@ require([
             const orthoLayersVisible = isAnyOrthoLayerVisible(
               view.map.basemap.baseLayers
             );
+            manageBasemapVisibility(view.map.basemap.baseLayers);
 
             view.map.allLayers.forEach((layer) => {
               if (layer.title === "Parcel Boundaries") {
@@ -166,6 +195,92 @@ require([
           return layer.visible && orthoLayerTitles.includes(layer.title);
         });
       }
+
+      function manageBasemapVisibility(baseLayers) {
+        const orthoLayerTitles = [
+          "Ortho 2012",
+          "Ortho 2016",
+          "Ortho 2019",
+          `${basemapTitle}`,
+        ];
+
+        let visibleLayerFound = false;
+
+        baseLayers.forEach((layer) => {
+          if (
+            orthoLayerTitles.includes(layer.title) &&
+            layer.visible &&
+            !visibleLayerFound
+          ) {
+            visibleLayerFound = true;
+          } else {
+            layer.visible = false;
+          }
+        });
+      }
+
+      // Sets parcel boundaries rendered, depending on if ortho basemaps are visible or not
+
+      // view.when().then(() => {
+      //   let originalRenderer;
+
+      //   view.map.allLayers.forEach((layer) => {
+      //     if (layer.title === "Parcel Boundaries") {
+      //       originalRenderer = layer.renderer;
+      //     }
+      //   });
+
+      //   reactiveUtils.watch(
+      //     () => [view.map.basemap.baseLayers.map((layer) => layer.visible)],
+      //     () => {
+      //       const orthoLayersVisible = isAnyOrthoLayerVisible(
+      //         view.map.basemap.baseLayers
+      //       );
+
+      //       view.map.allLayers.forEach((layer) => {
+      //         if (layer.title === "Parcel Boundaries") {
+      //           layer.renderer = orthoLayersVisible
+      //             ? {
+      //                 type: "simple",
+      //                 symbol: {
+      //                   type: "simple-line",
+      //                   size: 30,
+      //                   color: "#05fccf",
+      //                   outline: {
+      //                     width: 1,
+      //                     color: "white",
+      //                   },
+      //                 },
+      //               }
+      //             : originalRenderer;
+      //         }
+      //       });
+      //     }
+      //   );
+      // });
+
+      // function isAnyOrthoLayerVisible(baseLayers) {
+      //   const orthoLayerTitles = [
+      //     // `${basemapTitle}`,
+      //     "Ortho 2012",
+      //     "Ortho 2016",
+      //     "Ortho 2019",
+      //   ];
+
+      //   let visibleLayerFound = false;
+
+      //   baseLayers.forEach((layer) => {
+      //     if (orthoLayerTitles.includes(layer.title)) {
+      //       if (layer.visible && !visibleLayerFound) {
+      //         visibleLayerFound = true;
+      //       } else {
+      //         layer.visible = false;
+      //       }
+      //     }
+      //   });
+
+      //   return visibleLayerFound;
+      // }
 
       // Slider functionality for layers and labels
       async function defineActions(event) {

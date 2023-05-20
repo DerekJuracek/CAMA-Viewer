@@ -77,7 +77,7 @@ calcite-loader {
   /* border-radius: 5px; */
 }
 
-#layerDiv {
+/* #layerDiv #filterDiv {
   height: 32px;
   background-color: rgb(203, 197, 248);
   color: rgb(29, 17, 91);
@@ -85,6 +85,20 @@ calcite-loader {
   padding-left: 5px;
   display: flex;
   align-items: center;
+} */
+
+.layerDiv1 {
+  display: flex;
+  align-items: center;
+  height: 35px;
+  padding-left: 5px;
+}
+/* #filterDiv {
+  padding-top: 10px;
+} */
+
+#layerPanel {
+  height: 625px;
 }
 
 .accordion-container {
@@ -104,7 +118,12 @@ calcite-combobox-item {
   color: rgb(52, 39, 94);
 }
 
-.legend-icon {
+/* calcite-accordion-item {
+  height: 40px;
+} */
+
+.legend-icon,
+.reset-icon {
   background-repeat: no-repeat;
   background-size: contain;
   width: 24px;
@@ -116,7 +135,7 @@ calcite-combobox-item {
   margin: 15px;
 }
 
-#legend-container {
+#legend-container #filterButton {
   background-color: white;
   border-radius: 0px;
   padding: 8px;
@@ -126,11 +145,11 @@ calcite-combobox-item {
   display: none;
 }
 
-#resetFilters {
+/* #resetFilters {
   padding-left: 85%;
   padding-top: 5px;
   padding-bottom: 5px;
-}
+} */
 
 calcite-action-bar {
   width: 300px;
@@ -245,14 +264,27 @@ h6 {
   height: 40%;
 }
 
-h5#layerList {
+h5#layerList,
+h5#filterList {
   font-weight: 650;
   font-size: 18px;
-  display: flex;
-  align-items: center;
+  text-align: center;
+  /* padding-top: 10px; */
+
+  flex-direction: column;
+  justify-content: center;
 }
 
-#layerDiv {
+h5#filterList {
+  padding-top: 10px;
+}
+
+/* #filterButton {
+  padding-top: 50%;
+  padding-bottom: 50%;
+} */
+
+#layerDiv #filterDiv {
   display: flex;
   align-items: column;
 }

@@ -56,7 +56,7 @@
       "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/ArcGIS/rest/services/CT_Washington_CAMA_Viewer/FeatureServer/0",
       "title": "Primary Use",
       "fieldName": "Parcel_Primary_Use",
-      "isVisible": true,
+      "isVisible": false,
       "orderByField": "OBJECTID",
       "combobox1": "combo1",
       "combobox2": "combo2"
