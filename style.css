@@ -275,6 +275,10 @@ h5#filterList {
   justify-content: center;
 }
 
+h5#layerList {
+  padding-top: 5px;
+}
+
 h5#filterList {
   padding-top: 10px;
 }
