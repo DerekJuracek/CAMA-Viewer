@@ -6,6 +6,7 @@
   "cssViewBackground": "#bfa89f",
   "cssLayerFilterColor": "#8c7f6b",
   "cssLayerFilterTextColor": "#000000",
+  "basemapTitle": "CT Woodbury Basemap",
   "layers": [
     {
       "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/ArcGIS/rest/services/CT_Woodbury_CAMA_Viewer/FeatureServer/8",

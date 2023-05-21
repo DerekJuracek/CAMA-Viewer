@@ -6,6 +6,7 @@
   "cssViewBackground": "#f5f5f5",
   "cssLayerFilterColor": "#b0ab8e",
   "cssLayerFilterTextColor": "#000000",
+  "basemapTitle": "CT Weston Basemap",
   "layers": [
     {
       "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/ArcGIS/rest/services/CT_Weston_CAMA_Viewer/FeatureServer/8",

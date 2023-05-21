@@ -6,6 +6,7 @@
   "cssViewBackground": "#d4d4d4",
   "cssLayerFilterColor": "#dfe8e8",
   "cssLayerFilterTextColor": "#474747",
+  "basemapTitle": "CT Eastford Basemap",
   "layers": [
     {
       "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/ArcGIS/rest/services/CT_Eastford_CAMA_Viewer/FeatureServer/8",

@@ -6,6 +6,7 @@
   "cssViewBackground": "#9dbac7",
   "cssLayerFilterColor": "#ffffff",
   "cssLayerFilterTextColor": "#474747",
+  "basemapTitle": "CT Watertown Basemap",
   "layers": [
     {
       "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/ArcGIS/rest/services/CT_Watertown_CAMA_Viewer/FeatureServer/8",
