@@ -6,6 +6,7 @@
   "cssViewBackground": "#9dbac7",
   "cssLayerFilterColor": "#9dbac7",
   "cssLayerFilterTextColor": "#474747",
+  "basemapTitle": "CT Bethany Basemap",
   "layers": [
     {
       "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/ArcGIS/rest/services/CT_Bethany_CAMA_Viewer/FeatureServer/8",

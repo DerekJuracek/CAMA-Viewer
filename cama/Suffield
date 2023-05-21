@@ -6,6 +6,7 @@
   "cssViewBackground": "#21d1ce",
   "cssLayerFilterColor": "#6dc2c0",
   "cssLayerFilterTextColor": "#474747",
+  "basemapTitle": "CT Suffield Basemap",
   "layers": [
     {
       "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/ArcGIS/rest/services/CT_Suffield_CAMA_Viewer/FeatureServer/8",
