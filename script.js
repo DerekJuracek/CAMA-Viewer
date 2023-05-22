@@ -305,6 +305,7 @@ require([
           const labelDiv = document.createElement("div");
           labelDiv.innerHTML = "<p>Label Opacity (%)</p>";
           labelDiv.id = "opacityDiv";
+
           const opacitySlider = new Slider({
             container: opacityDiv,
             min: 0,
