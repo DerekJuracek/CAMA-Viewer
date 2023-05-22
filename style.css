@@ -7,7 +7,10 @@ body,
   width: 100%;
 }
 
-calcite-loader {
+.esri-view .esri-view-surface--inset-outline:focus::after {
+  outline: none !important;
+}
+‍‍‍ calcite-loader {
   align-self: center;
   justify-self: center;
 }
@@ -36,37 +39,58 @@ calcite-loader {
 }
 
 #search-widget-container {
-  margin-left: 40%;
-  margin-right: 5%;
+  margin-left: 44%;
+  margin-right: 2%;
   border-radius: 5px;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1400px) {
+  #search-widget-container {
+    margin-left: 31%;
+    margin-right: 3%;
+  }
+}
+
+/* @media (max-width: 1350px) {
+  #search-widget-container {
+    margin-left: 30%;
+    margin-right: 3%;
+  }
+} */
+
+/* @media (max-width: 1300px) {
   #search-widget-container {
     margin-left: 30%;
     margin-right: 10%;
   }
-}
+} */
 
-@media (max-width: 1250px) {
+/* @media (max-width: 1200px) {
   #search-widget-container {
-    margin-left: 25%;
-    margin-right: 10%;
+    margin-left: 28%;
+    margin-right: 12%;
   }
-}
+} */
 
 .esri-search__input {
-  width: 300px;
+  width: 370px;
   /* border-radius: 5px;  */
 }
 .esri-search esri-widget {
   border-radius: 3px;
 }
 
+@media (max-width: 1300px) {
+  .esri-search__input {
+    width: 200px;
+    /* margin-right: 5%; */
+  }
+}
+
 @media (max-width: 1000px) {
   .esri-search__input {
-    width: 125px;
-    margin-right: 10%;
+    width: 100px;
+    /* margin-right: 5%; */
   }
 }
 
@@ -282,11 +306,6 @@ h5#layerList {
 h5#filterList {
   padding-top: 10px;
 }
-
-/* #filterButton {
-  padding-top: 50%;
-  padding-bottom: 50%;
-} */
 
 #layerDiv #filterDiv {
   display: flex;
