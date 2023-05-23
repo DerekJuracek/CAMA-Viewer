@@ -32,6 +32,24 @@ body,
   white-space: nowrap;
   min-width: 500px;
 }
+/* @media (max-width: 700px) {
+  #header-title {
+    font-size: 10px;
+
+    padding: 0.5rem;
+    padding-left: 50px;
+    margin-right: 0;
+    position: relative;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    color: white;
+    background-color: rgb(66, 53, 125);
+    z-index: 1000;
+    white-space: nowrap;
+    min-width: 500px;
+  }
+} */
 
 #header-title img {
   position: absolute;
@@ -44,16 +62,43 @@ body,
   border-radius: 5px;
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1401px) {
   #search-widget-container {
-    margin-left: 31%;
+    margin-left: 38%;
     margin-right: 3%;
+  }
+}
+
+@media (max-width: 1201px) {
+  #search-widget-container {
+    margin-left: 25%;
+    margin-right: 10%;
+  }
+}
+
+@media (max-width: 1001px) {
+  #search-widget-container {
+    margin-left: 25%;
+    margin-right: 10%;
+  }
+}
+
+@media (max-width: 801px) {
+  #search-widget-container {
+    margin-left: 20%;
+    margin-right: 18%;
+  }
+}
+
+@media (max-width: 751px) {
+  #search-widget-container {
+    margin-left: 0%;
+    margin-right: 65%;
   }
 }
 
 .esri-search__input {
   width: 370px;
-  /* border-radius: 5px;  */
 }
 .esri-search esri-widget {
   border-radius: 3px;
@@ -62,22 +107,24 @@ body,
 @media (max-width: 1300px) {
   .esri-search__input {
     width: 200px;
-    /* margin-right: 5%; */
   }
 }
 
 @media (max-width: 1000px) {
   .esri-search__input {
-    width: 100px;
-    /* margin-right: 5%; */
+    width: 150px;
   }
 }
 
-/* Change the background color of the search submit button */
+@media (max-width: 700px) {
+  .esri-search__input {
+    width: 75px;
+  }
+}
+
 .esri-search__submit-button {
   color: white;
   background-color: #5b5b5b;
-  /* border-radius: 5px; */
 }
 
 .layerDiv1 {
@@ -210,6 +257,12 @@ esri-layer-list__item {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+@media (max-width: 700px) {
+  #cama-viewer {
+    visibility: hidden;
+  }
 }
 
 h6 {
