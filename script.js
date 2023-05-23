@@ -172,12 +172,11 @@ require([
                   ? {
                       type: "simple",
                       symbol: {
-                        type: "simple-line",
-                        size: 30,
-                        color: "#05fccf",
+                        type: "simple-fill",
+                        color: [255, 255, 255, 0.1],
                         outline: {
                           width: 1,
-                          color: "white",
+                          color: [5, 252, 207],
                         },
                       },
                     }
