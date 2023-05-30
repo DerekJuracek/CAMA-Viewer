@@ -291,77 +291,172 @@ require([
       // }
 
       // Slider functionality for layers and labels
-      async function defineActions(event) {
-        const item = event.item;
+      // async function defineActions(event) {
+      //   const item = event.item;
 
-        await item.layer.when();
+      //   await item.layer.when();
 
-        if (item.children.length < 1) {
-          const opacityDiv = document.createElement("div");
-          opacityDiv.innerHTML = "<p>Layer Opacity (%)</p>";
-          opacityDiv.id = "opacityDiv";
+      //   if (item.children.length < 1) {
+      //     const opacityDiv = document.createElement("div");
+      //     opacityDiv.innerHTML = "<p>Layer Opacity (%)</p>";
+      //     opacityDiv.id = "opacityDiv";
 
-          const labelDiv = document.createElement("div");
-          labelDiv.innerHTML = "<p>Label Opacity (%)</p>";
-          labelDiv.id = "opacityDiv";
+      //     const labelDiv = document.createElement("div");
+      //     labelDiv.innerHTML = "<p>Label Opacity (%)</p>";
+      //     labelDiv.id = "opacityDiv";
 
-          const opacitySlider = new Slider({
-            container: opacityDiv,
-            min: 0,
-            max: 1,
-            values: [0.75],
-            precision: 2,
-            visibleElements: {
-              labels: true,
-              rangeLabels: true,
-            },
-          });
+      //     const opacitySlider = new Slider({
+      //       container: opacityDiv,
+      //       min: 0,
+      //       max: 1,
+      //       values: [0.75],
+      //       precision: 2,
+      //       visibleElements: {
+      //         labels: true,
+      //         rangeLabels: true,
+      //       },
+      //     });
 
-          const labelSlider = new Slider({
-            container: labelDiv,
-            min: 0,
-            max: 1,
-            values: [1],
-            precision: 2,
-            visibleElements: {
-              labels: true,
-              rangeLabels: true,
-            },
-          });
+      //     const labelSlider = new Slider({
+      //       container: labelDiv,
+      //       min: 0,
+      //       max: 1,
+      //       values: [1],
+      //       precision: 2,
+      //       visibleElements: {
+      //         labels: true,
+      //         rangeLabels: true,
+      //       },
+      //     });
 
-          item.panel = {
-            content: [opacityDiv, labelDiv],
-            className: "esri-icon-sliders-horizontal",
-            title: "Change layer settings",
-            label: "Change layer settings",
-          };
+      //     item.panel = {
+      //       content: [opacityDiv, labelDiv],
+      //       className: "esri-icon-sliders-horizontal",
+      //       title: "Change layer settings",
+      //       label: "Change layer settings",
+      //     };
 
-          opacitySlider.on("thumb-drag", (event) => {
-            const { value } = event;
-            item.layer.opacity = value;
-          });
+      //     opacitySlider.on("thumb-drag", (event) => {
+      //       const { value } = event;
+      //       item.layer.opacity = value;
+      //     });
 
-          labelSlider.on("thumb-drag", (event) => {
-            const { value } = event;
-            if (item.layer.labelingInfo) {
-              item.layer.labelingInfo = item.layer.labelingInfo.map(
-                (labelClass) => {
-                  const newLabelClass = labelClass.clone();
-                  newLabelClass.symbol.color.a = value;
-                  newLabelClass.symbol.haloColor.a = value;
-                  return newLabelClass;
-                }
-              );
-            }
-          });
-        }
-      }
+      //     labelSlider.on("thumb-drag", (event) => {
+      //       const { value } = event;
+      //       if (item.layer.labelingInfo) {
+      //         item.layer.labelingInfo = item.layer.labelingInfo.map(
+      //           (labelClass) => {
+      //             const newLabelClass = labelClass.clone();
+      //             newLabelClass.symbol.color.a = value;
+      //             newLabelClass.symbol.haloColor.a = value;
+      //             return newLabelClass;
+      //           }
+      //         );
+      //       }
+      //     });
+      //   }
+      // }
 
       view.when(() => {
         const layerList = new LayerList({
           view,
-          listItemCreatedFunction: defineActions,
+          // listItemCreatedFunction: defineActions,
           container: "layers-container",
+          listItemCreatedFunction: async function (event) {
+            const item = event.item;
+            await item.layer.when();
+
+            // If the layer is "Centerline", hide it and return
+            if (item.layer.title === "Centerline") {
+              item.layer.listMode = "hide";
+              item.actionsSections = [];
+              item.panel = {
+                content: null,
+                open: false,
+                visible: false,
+              };
+              return; // Skip the rest of this function if we're hiding this layer
+            }
+
+            // Otherwise, setup the slider functionality
+            if (item.children.length < 1) {
+              const opacityDiv = document.createElement("div");
+              opacityDiv.innerHTML = "<p>Layer Opacity (%)</p>";
+              opacityDiv.id = "opacityDiv";
+
+              const labelDiv = document.createElement("div");
+              labelDiv.innerHTML = "<p>Label Opacity (%)</p>";
+              labelDiv.id = "labelDiv";
+
+              const opacitySlider = new Slider({
+                container: opacityDiv,
+                min: 0,
+                max: 1,
+                values: [0.75],
+                precision: 2,
+                visibleElements: {
+                  labels: true,
+                  rangeLabels: true,
+                },
+              });
+
+              const labelSlider = new Slider({
+                container: labelDiv,
+                min: 0,
+                max: 1,
+                values: [1],
+                precision: 2,
+                visibleElements: {
+                  labels: true,
+                  rangeLabels: true,
+                },
+              });
+
+              item.panel = {
+                content: [opacityDiv, labelDiv],
+                className: "esri-icon-sliders-horizontal",
+                title: "Change layer settings",
+                label: "Change layer settings",
+              };
+
+              opacitySlider.on("thumb-drag", (event) => {
+                const { value } = event;
+                item.layer.opacity = value;
+              });
+
+              labelSlider.on("thumb-drag", (event) => {
+                const { value } = event;
+                if (item.layer.labelingInfo) {
+                  item.layer.labelingInfo = item.layer.labelingInfo.map(
+                    (labelClass) => {
+                      const newLabelClass = labelClass.clone();
+                      newLabelClass.symbol.color.a = value;
+                      newLabelClass.symbol.haloColor.a = value;
+                      return newLabelClass;
+                    }
+                  );
+                }
+              });
+            }
+          },
+
+          // listItemCreatedFunction: function (event) {
+          //   var item = event.item;
+          //   console.log(item);
+          //   // console.log(item.layer.title);
+          //   // hiding the layer from the layer list, need to check if other items work.
+          //   if (item.layer.title === "Centerline") {
+          //     (item.layer.listMode = "hide"),
+          //       // replace 'myLayerId' with the id of the layer you want to hide
+          //       (item.actionsSections = []); // remove actions like zoom to
+          //     // prevent the layer listing from being shown
+          //     item.panel = {
+          //       content: null,
+          //       open: false,
+          //       visible: false,
+          //     };
+          //   }
+          // },
         });
       });
 
