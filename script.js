@@ -83,18 +83,6 @@ require([
       const filterList = document.getElementById("filterDiv");
       filterList.appendChild(filterButton);
 
-      // Copy the legend toggle to learn and do it yourself for the reset button
-
-      // const legendToggle = document.createElement("calcite-icon");
-      // legendToggle.setAttribute("icon", "legend");
-      // legendToggle.setAttribute("scale", "m");
-      // legendToggle.setAttribute("theme", "dark");
-      // legendToggle.style.cursor = "pointer";
-      // legendToggle.style.marginLeft = "170px";
-
-      // const layerDiv1 = document.getElementById("layerDiv");
-      // layerDiv1.appendChild(legendToggle);
-
       const view = new MapView({
         container: "viewDiv",
         map: webmap,
@@ -227,136 +215,6 @@ require([
         });
       }
 
-      // Sets parcel boundaries rendered, depending on if ortho basemaps are visible or not
-
-      // view.when().then(() => {
-      //   let originalRenderer;
-
-      //   view.map.allLayers.forEach((layer) => {
-      //     if (layer.title === "Parcel Boundaries") {
-      //       originalRenderer = layer.renderer;
-      //     }
-      //   });
-
-      //   reactiveUtils.watch(
-      //     () => [view.map.basemap.baseLayers.map((layer) => layer.visible)],
-      //     () => {
-      //       const orthoLayersVisible = isAnyOrthoLayerVisible(
-      //         view.map.basemap.baseLayers
-      //       );
-
-      //       view.map.allLayers.forEach((layer) => {
-      //         if (layer.title === "Parcel Boundaries") {
-      //           layer.renderer = orthoLayersVisible
-      //             ? {
-      //                 type: "simple",
-      //                 symbol: {
-      //                   type: "simple-line",
-      //                   size: 30,
-      //                   color: "#05fccf",
-      //                   outline: {
-      //                     width: 1,
-      //                     color: "white",
-      //                   },
-      //                 },
-      //               }
-      //             : originalRenderer;
-      //         }
-      //       });
-      //     }
-      //   );
-      // });
-
-      // function isAnyOrthoLayerVisible(baseLayers) {
-      //   const orthoLayerTitles = [
-      //     // `${basemapTitle}`,
-      //     "Ortho 2012",
-      //     "Ortho 2016",
-      //     "Ortho 2019",
-      //   ];
-
-      //   let visibleLayerFound = false;
-
-      //   baseLayers.forEach((layer) => {
-      //     if (orthoLayerTitles.includes(layer.title)) {
-      //       if (layer.visible && !visibleLayerFound) {
-      //         visibleLayerFound = true;
-      //       } else {
-      //         layer.visible = false;
-      //       }
-      //     }
-      //   });
-
-      //   return visibleLayerFound;
-      // }
-
-      // Slider functionality for layers and labels
-      // async function defineActions(event) {
-      //   const item = event.item;
-
-      //   await item.layer.when();
-
-      //   if (item.children.length < 1) {
-      //     const opacityDiv = document.createElement("div");
-      //     opacityDiv.innerHTML = "<p>Layer Opacity (%)</p>";
-      //     opacityDiv.id = "opacityDiv";
-
-      //     const labelDiv = document.createElement("div");
-      //     labelDiv.innerHTML = "<p>Label Opacity (%)</p>";
-      //     labelDiv.id = "opacityDiv";
-
-      //     const opacitySlider = new Slider({
-      //       container: opacityDiv,
-      //       min: 0,
-      //       max: 1,
-      //       values: [0.75],
-      //       precision: 2,
-      //       visibleElements: {
-      //         labels: true,
-      //         rangeLabels: true,
-      //       },
-      //     });
-
-      //     const labelSlider = new Slider({
-      //       container: labelDiv,
-      //       min: 0,
-      //       max: 1,
-      //       values: [1],
-      //       precision: 2,
-      //       visibleElements: {
-      //         labels: true,
-      //         rangeLabels: true,
-      //       },
-      //     });
-
-      //     item.panel = {
-      //       content: [opacityDiv, labelDiv],
-      //       className: "esri-icon-sliders-horizontal",
-      //       title: "Change layer settings",
-      //       label: "Change layer settings",
-      //     };
-
-      //     opacitySlider.on("thumb-drag", (event) => {
-      //       const { value } = event;
-      //       item.layer.opacity = value;
-      //     });
-
-      //     labelSlider.on("thumb-drag", (event) => {
-      //       const { value } = event;
-      //       if (item.layer.labelingInfo) {
-      //         item.layer.labelingInfo = item.layer.labelingInfo.map(
-      //           (labelClass) => {
-      //             const newLabelClass = labelClass.clone();
-      //             newLabelClass.symbol.color.a = value;
-      //             newLabelClass.symbol.haloColor.a = value;
-      //             return newLabelClass;
-      //           }
-      //         );
-      //       }
-      //     });
-      //   }
-      // }
-
       view.when(() => {
         const layerList = new LayerList({
           view,
@@ -439,24 +297,6 @@ require([
               });
             }
           },
-
-          // listItemCreatedFunction: function (event) {
-          //   var item = event.item;
-          //   console.log(item);
-          //   // console.log(item.layer.title);
-          //   // hiding the layer from the layer list, need to check if other items work.
-          //   if (item.layer.title === "Centerline") {
-          //     (item.layer.listMode = "hide"),
-          //       // replace 'myLayerId' with the id of the layer you want to hide
-          //       (item.actionsSections = []); // remove actions like zoom to
-          //     // prevent the layer listing from being shown
-          //     item.panel = {
-          //       content: null,
-          //       open: false,
-          //       visible: false,
-          //     };
-          //   }
-          // },
         });
       });
 
@@ -608,6 +448,7 @@ require([
           case "distance":
             activeWidget1 = new DistanceMeasurement2D({
               view: view,
+              unit: "feet",
             });
             // skip the initial 'new measurement' button
             activeWidget1.viewModel.start();
@@ -618,6 +459,7 @@ require([
           case "area":
             activeWidget1 = new AreaMeasurement2D({
               view: view,
+              unit: "square-us-feet",
             });
 
             activeWidget1.viewModel.start();
