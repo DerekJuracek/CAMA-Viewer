@@ -564,7 +564,9 @@ require([
           webmap.add(featureLayer);
 
           const combobox1ID = document.querySelector(`#${combobox1}`);
+          combobox1ID.maxItems = "8";
           const combobox2ID = document.querySelector(`#${combobox2}`);
+          combobox2ID.maxItems = "8";
 
           view.whenLayerView(featureLayer).then(function (layerView) {
             const uniqueValueQuery = featureLayer.createQuery();
