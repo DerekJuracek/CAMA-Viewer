@@ -573,6 +573,7 @@ require([
             uniqueValueQuery.returnDistinctValues = true;
             uniqueValueQuery.outFields = [fieldName];
             uniqueValueQuery.orderByFields = [orderByField];
+            uniqueValueQuery.maxRecordCountFactor = 5;
 
             const applyFilters = () => {
               const selectedItem1 = combobox1ID.selectedItems[0];
