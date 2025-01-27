@@ -1,0 +1,67 @@
+{
+  "webmapId": "e03c723e7cd84cc8acc5f99dc28897ab",
+  "image": "https://publicweb-gis.s3.amazonaws.com/Images/MunicipalSeals/Torrington_CT.png",
+  "title": "City of Torrington, CT REVAL",
+  "cssHeaderBackground": "#436B73",
+  "cssViewBackground": "#E3735E",
+  "cssLayerFilterColor": "#00A8C5",
+  "cssLayerFilterTextColor": "9dbac7",
+  "basemapTitle": "CT Torrington Basemap",
+  "layers": [
+    {
+      "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/ArcGIS/rest/services/CT_Torrington_REVAL_Viewer/FeatureServer/8",
+      "title": "Land Influence",
+      "fieldName": "Influence_Type",
+      "isVisible": false,
+      "orTorringtonField": "OBJECTID",
+      "combobox1": "combo11",
+      "combobox2": "combo12"
+    },
+    {
+      "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/ArcGIS/rest/services/CT_Torrington_REVAL_Viewer/FeatureServer/4",
+      "title": "Neighborhood",
+      "fieldName": "Neighborhood",
+      "isVisible": false,
+	  "queryAllRecords": true,
+      "orTorringtonField": "OBJECTID",
+      "combobox1": "combo9",
+      "combobox2": "combo10"
+    },
+    {
+      "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/ArcGIS/rest/services/CT_Torrington_REVAL_Viewer/FeatureServer/3",
+      "title": "Design Type",
+      "fieldName": "Design_Type",
+      "isVisible": false,
+      "orTorringtonField": "OBJECTID",
+      "combobox1": "combo7",
+      "combobox2": "combo8"
+    },
+    {
+      "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/ArcGIS/rest/services/CT_Torrington_REVAL_Viewer/FeatureServer/2",
+      "title": "Parcel Type",
+      "fieldName": "Parcel_Type",
+      "isVisible": false,
+      "orTorringtonField": "OBJECTID",
+      "combobox1": "combo5",
+      "combobox2": "combo6"
+    },
+    {
+      "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/ArcGIS/rest/services/CT_Torrington_REVAL_Viewer/FeatureServer/1",
+      "title": "Primary Building Use",
+      "fieldName": "Building_Use_Code",
+      "isVisible": false,
+      "orTorringtonField": "OBJECTID",
+      "combobox1": "combo3",
+      "combobox2": "combo4"
+    },
+    {
+      "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/arcgis/rest/services/CT_Torrington_REVAL_Viewer/FeatureServer/0",
+      "title": "Primary Use",
+      "fieldName": "Parcel_Primary_Use",
+      "isVisible": false,
+      "orTorringtonField": "OBJECTID",
+      "combobox1": "combo1",
+      "combobox2": "combo2"
+    }
+  ]
+}

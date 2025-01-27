@@ -1,0 +1,66 @@
+{
+  "webmapId": "8edad98c1b02422684192129f0147590",
+  "image": "https://publicweb-gis.s3.amazonaws.com/Images/MunicipalSeals/Newington_CT.png",
+  "title": "Newington, CT REVAL",
+  "cssHeaderBackground": "#00356B",
+  "cssViewBackground": "#E3735E",
+  "cssLayerFilterColor": "#A3C1B3",
+  "cssLayerFilterTextColor": "9dbac7",
+  "basemapTitle": "CT Newington Basemap",
+  "layers": [
+    {
+      "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/arcgis/rest/services/CT_Newington_REVAL_Viewer_Full/FeatureServer/8",
+      "title": "Influence Type",
+      "fieldName": "Influence_Type",
+      "isVisible": false,
+      "orWoodbridgeField": "OBJECTID",
+      "combobox1": "combo11",
+      "combobox2": "combo12"
+    },
+    {
+      "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/arcgis/rest/services/CT_Newington_REVAL_Viewer_Full/FeatureServer/4",
+      "title": "Neighborhood",
+      "fieldName": "Neighborhood",
+      "isVisible": false,
+      "orWoodbridgeField": "OBJECTID",
+      "combobox1": "combo9",
+      "combobox2": "combo10"
+    },
+    {
+      "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/arcgis/rest/services/CT_Newington_REVAL_Viewer_Full/FeatureServer/3",
+      "title": "Design Type",
+      "fieldName": "Design_Type",
+      "isVisible": false,
+      "orWoodbridgeField": "OBJECTID",
+      "combobox1": "combo7",
+      "combobox2": "combo8"
+    },
+    {
+      "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/arcgis/rest/services/CT_Newington_REVAL_Viewer_Full/FeatureServer/2",
+      "title": "Parcel Type",
+      "fieldName": "Parcel_Type",
+      "isVisible": false,
+      "orWoodbridgeField": "OBJECTID",
+      "combobox1": "combo5",
+      "combobox2": "combo6"
+    },
+    {
+      "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/arcgis/rest/services/CT_Newington_REVAL_Viewer_Full/FeatureServer/1",
+      "title": "Building Use Code",
+      "fieldName": "Building_Use_Code",
+      "isVisible": false,
+      "orWoodbridgeField": "OBJECTID",
+      "combobox1": "combo3",
+      "combobox2": "combo4"
+    },
+    {
+      "url": "https://services1.arcgis.com/j6iFLXhyiD3XTMyD/arcgis/rest/services/CT_Newington_REVAL_Viewer_Full/FeatureServer/0",
+      "title": "Parcel Primary Use",
+      "fieldName": "Parcel_Primary_Use",
+      "isVisible": false,
+      "orWoodbridgeField": "OBJECTID",
+      "combobox1": "combo1",
+      "combobox2": "combo2"
+    }
+  ]
+}
