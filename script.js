@@ -204,7 +204,7 @@ require([
           "Ortho 2012",
           "Ortho 2016",
           "Ortho 2019",
-		  "Ortho 2023",
+		      "Ortho 2023",
           `${basemapTitle}`,
         ];
 
@@ -684,13 +684,13 @@ document.getElementById("buildFilters").addEventListener("calciteSwitchChange", 
     });
   } else {
     console.log("Switch is OFF (false)");
+    list = [1,2,3,4,5,6,7,8,9,10,11,12]
+    list.forEach((combo) => {
+      const combobox = document.querySelector(`#combo${combo}`);
+      combobox.innerHTML = "";
+    })
     // Disable filters or reset them for all layers
-    featureLayers.forEach(({ featureLayer }) => {
-      view.whenLayerView(featureLayer).then((layerView) => {
-        layerView.filter = null; // Clear the filters
-        console.log(`Filters disabled for layer: ${featureLayer.title}`);
-      });
-    });
+
   }
 });
 
