@@ -577,8 +577,7 @@ function addLayerToMap(config) {
   return featureLayer; // Return the layer for further processing
 }
 
-// Function to set up filters and populate comboboxes
-function setupFilters(featureLayer, config) {
+async function setupFilters(featureLayer, config) {
   const { fieldName, orderByField, combobox1, combobox2 } = config;
 
   const combobox1ID = document.querySelector(`#${combobox1}`);
@@ -586,12 +585,71 @@ function setupFilters(featureLayer, config) {
   combobox1ID.maxItems = "8";
   combobox2ID.maxItems = "8";
 
-  view.whenLayerView(featureLayer).then((layerView) => {
-    const uniqueValueQuery = featureLayer.createQuery();
-    uniqueValueQuery.returnDistinctValues = true;
-    uniqueValueQuery.outFields = [fieldName];
-    uniqueValueQuery.orderByFields = [`${fieldName} ASC`];
-    uniqueValueQuery.maxRecordCountFactor = 5;
+  const layerView = await view.whenLayerView(featureLayer);
+
+  const uniqueValueQuery = featureLayer.createQuery();
+  uniqueValueQuery.returnDistinctValues = true;
+  uniqueValueQuery.outFields = [fieldName];
+  uniqueValueQuery.orderByFields = [`${fieldName} ASC`];
+  uniqueValueQuery.maxRecordCountFactor = 5;
+  uniqueValueQuery.returnExceededLimitFeatures = true;
+
+  // Function to get additional values if needed
+  async function triggerAnotherQuery() {
+    const additionalQuery = featureLayer.createQuery();
+    additionalQuery.returnDistinctValues = true;
+    additionalQuery.outFields = [fieldName];
+    additionalQuery.orderByFields = [`${fieldName} ASC`];
+    additionalQuery.maxRecordCountFactor = 5;
+    additionalQuery.start = 10000
+    additionalQuery.num = 3000;
+
+    try {
+      const results = await featureLayer.queryFeatures(additionalQuery);
+      return results.features;
+    } catch (error) {
+      console.error("Error fetching second batch:", error);
+      return [];
+    }
+  }
+
+  try {
+    const results = await featureLayer.queryFeatures(uniqueValueQuery);
+    let finalVals = results.features;
+
+    if (results.features.length === 10000) {
+      const secondVals = await triggerAnotherQuery(); // WAIT for the second query
+      finalVals = [...results.features, ...secondVals]; 
+    }
+
+    // Process unique values and add them to comboboxes
+    const uniqueValues = new Set();
+    finalVals.forEach((feature) => {
+      const value = feature.attributes[fieldName];
+      if (value && !uniqueValues.has(value)) {
+        uniqueValues.add(value);
+
+        // Add value to both comboboxes
+        const item1 = document.createElement("calcite-combobox-item");
+        item1.value = value;
+        item1.textLabel = value;
+        combobox1ID.appendChild(item1);
+
+        const item2 = document.createElement("calcite-combobox-item");
+        item2.value = value;
+        item2.textLabel = value;
+        combobox2ID.appendChild(item2);
+      }
+    });
+
+    // Add "Show All" option to comboboxes
+    // ["combobox1ID", "combobox2ID"].forEach((combobox) => {
+    //   const showAllItem = document.createElement("calcite-combobox-item");
+    //   showAllItem.value = "Show_All";
+    //   showAllItem.textLabel = "Show All";
+    //   eval(combobox).appendChild(showAllItem);
+    // });
+
 
     // Function to apply filters
     const applyFilters = () => {
@@ -619,36 +677,6 @@ function setupFilters(featureLayer, config) {
       };
     };
 
-    // Populate comboboxes with distinct values
-    featureLayer.queryFeatures(uniqueValueQuery).then((results) => {
-      const uniqueValues = new Set();
-      results.features.forEach((feature) => {
-        const value = feature.attributes[fieldName];
-        if (value && !uniqueValues.has(value)) {
-          uniqueValues.add(value);
-
-          // Add value to both comboboxes
-          const item1 = document.createElement("calcite-combobox-item");
-          item1.value = value;
-          item1.textLabel = value;
-          combobox1ID.appendChild(item1);
-
-          const item2 = document.createElement("calcite-combobox-item");
-          item2.value = value;
-          item2.textLabel = value;
-          combobox2ID.appendChild(item2);
-        }
-      });
-
-      // Add "Show All" option to comboboxes
-      ["combobox1ID", "combobox2ID"].forEach((combobox) => {
-        const showAllItem = document.createElement("calcite-combobox-item");
-        showAllItem.value = "Show_All";
-        showAllItem.textLabel = "Show All";
-        eval(combobox).appendChild(showAllItem);
-      });
-    });
-
     // Add event listeners for combobox changes
     combobox1ID.addEventListener("calciteComboboxChange", applyFilters);
     combobox2ID.addEventListener("calciteComboboxChange", applyFilters);
@@ -660,37 +688,32 @@ function setupFilters(featureLayer, config) {
       applyFilters();
     });
 
-   
-  });
+  } catch (error) {
+    console.error("Error fetching unique values:", error);
+  }
 }
 
-// Step 1: Add all layers to the map initially
+
 const featureLayers = layers.map((layerConfig) => {
   return {
-    featureLayer: addLayerToMap(layerConfig), // Add the layer to the map
-    config: layerConfig, // Keep track of the original configuration
+    featureLayer: addLayerToMap(layerConfig),
+    config: layerConfig, 
   };
 });
 
-// Step 2: Set up the switch to toggle filters
 document.getElementById("buildFilters").addEventListener("calciteSwitchChange", (event) => {
   const isChecked = event.target.checked; // Get the checked state (true or false)
 
   if (isChecked) {
-    console.log("Switch is ON (true)");
-    // Enable filters for all layers
     featureLayers.forEach(({ featureLayer, config }) => {
-      setupFilters(featureLayer, config); // Enable filters for each layer
+      setupFilters(featureLayer, config);
     });
   } else {
-    console.log("Switch is OFF (false)");
     list = [1,2,3,4,5,6,7,8,9,10,11,12]
     list.forEach((combo) => {
       const combobox = document.querySelector(`#combo${combo}`);
       combobox.innerHTML = "";
     })
-    // Disable filters or reset them for all layers
-
   }
 });
 
@@ -707,130 +730,8 @@ function addLayerToMap(config) {
 
   webmap.add(featureLayer);
 
-  return featureLayer; // Return the layer for later use
+  return featureLayer; 
 }
-
-
-
-  // document.body.appendChild(toggleFilterButton); 
-// });
-
-
-        // // add layers to map from config file, set up filters, and add to comboboxes for dropdowns
-        // function addLayerToMap(config) {
-        //   const {
-        //     url,
-        //     title,
-        //     fieldName,
-        //     isVisible,
-        //     orderByField,
-        //     combobox1,
-        //     combobox2,
-        //   } = config;
-
-        //   const featureLayer = new FeatureLayer({
-        //     url,
-        //     title,
-        //     popupEnabled: true,
-        //     visible: isVisible,
-        //   });
-
-        //   webmap.add(featureLayer);
-
-        //   const combobox1ID = document.querySelector(`#${combobox1}`);
-        //   combobox1ID.maxItems = "8";
-        //   const combobox2ID = document.querySelector(`#${combobox2}`);
-        //   combobox2ID.maxItems = "8";
-
-        //   view.whenLayerView(featureLayer).then(function (layerView) {
-        //   const uniqueValueQuery = featureLayer.createQuery();
-			  //   //uniqueValueQuery.where = "1=1";
-        //   uniqueValueQuery.returnDistinctValues = true;
-        //   uniqueValueQuery.outFields = [fieldName];
-		    //   uniqueValueQuery.orderByFields = [`${fieldName} ASC`];
-	      //   uniqueValueQuery.maxRecordCountFactor = 5;
-
-
-        //     const applyFilters = () => {
-        //       const selectedItem1 = combobox1ID.selectedItems[0];
-        //       const selectedValue1 = selectedItem1 ? selectedItem1.value : null;
-        //       const selectedItem2 = combobox2ID.selectedItems[0];
-        //       const selectedValue2 = selectedItem2 ? selectedItem2.value : null;
-
-        //       let filterExpression = "";
-
-        //       if (selectedValue1 && selectedValue1 !== "Show_All") {
-        //         filterExpression = `${fieldName} = '${selectedValue1}'`;
-        //       }
-
-        //       if (selectedValue2 && selectedValue2 !== "Show_All") {
-        //         if (filterExpression) {
-        //           filterExpression += ` OR ${fieldName} = '${selectedValue2}'`;
-        //         } else {
-        //           filterExpression = `${fieldName} = '${selectedValue2}'`;
-        //         }
-        //       }
-
-        //       layerView.filter = {
-        //         where: filterExpression,
-        //       };
-        //     };
-
-        //     featureLayer.queryFeatures(uniqueValueQuery).then((results) => {
-        //       console.log(results)
-        //       const uniquePrimaryUses = new Set();
-        //       results.features.forEach((feature) => {
-        //         const primaryUseValue = feature.attributes[fieldName];
-        //         if (
-        //           !uniquePrimaryUses.has(primaryUseValue) &&
-        //           (primaryUseValue != null) & (primaryUseValue != "") &&
-        //           primaryUseValue != undefined
-        //         ) {
-        //           uniquePrimaryUses.add(primaryUseValue);
-        //           console.log(uniquePrimaryUses)
-        //           const item1 = document.createElement("calcite-combobox-item");
-        //           item1.value = primaryUseValue;
-        //           item1.textLabel = primaryUseValue;
-        //           combobox1ID.appendChild(item1);
-
-        //           const item2 = document.createElement("calcite-combobox-item");
-        //           item2.value = primaryUseValue;
-        //           item2.textLabel = primaryUseValue;
-        //           combobox2ID.appendChild(item2);
-        //         }
-        //       });
-        //     });
-
-        //     const showAllItem1 = document.createElement(
-        //       "calcite-combobox-item"
-        //     );
-        //     showAllItem1.value = "Show_All";
-        //     showAllItem1.textLabel = "Show All";
-        //     combobox1ID.appendChild(showAllItem1);
-
-        //     const showAllItem2 = document.createElement(
-        //       "calcite-combobox-item"
-        //     );
-        //     showAllItem2.value = "Show_All";
-        //     showAllItem2.textLabel = "Show All";
-        //     combobox2ID.appendChild(showAllItem2);
-
-        //     combobox1ID.addEventListener("calciteComboboxChange", applyFilters);
-        //     combobox2ID.addEventListener("calciteComboboxChange", applyFilters);
-
-        //     // logic to reset filters
-        //     document
-        //       .getElementById("resetFilters")
-        //       .addEventListener("click", () => {
-        //         combobox1ID.selectedItems = [];
-        //         combobox2ID.selectedItems = [];
-        //         applyFilters();
-        //       });
-        //   });
-        // }
-        // layers.forEach((layerConfig) => {
-        //   addLayerToMap(layerConfig);
-        // });
       });
     });
 });
